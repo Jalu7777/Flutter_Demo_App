@@ -6,13 +6,10 @@ import 'package:flutter_app_demo/repository/demo_api.dart';
 import 'package:flutter_app_demo/utils/api_url.dart';
 
 class HomeProvider extends ChangeNotifier {
-  
   List arrData = [];
   List arrFilterData = [];
-  List arrCategory=[];
-  bool catLabel=false;
+  List arrCategory = [];
   bool label = false;
-  
 
   getData() async {
     log('inn');
@@ -20,7 +17,6 @@ class HomeProvider extends ChangeNotifier {
 
     Map<String, dynamic> responseData =
         await DemoApi.getAPI(url: ApiUrl.getProduct);
-    // DemoApi.getAPI(url: "https://dummyjson.com/products").then((responseData){
     if (responseData.isEmpty) {
       label = false;
       arrFilterData = [];
@@ -32,11 +28,10 @@ class HomeProvider extends ChangeNotifier {
         arrData = [];
         arrData = responseData['products'];
         arrFilterData = responseData['products'];
-        } else {
+      } else {
         label = false;
         arrData = [];
         arrFilterData = [];
-
       }
     }
     notifyListeners();
@@ -44,23 +39,18 @@ class HomeProvider extends ChangeNotifier {
 
   getCategory() async {
     log('inn');
-    catLabel = true;
 
     Map<String, dynamic> responseData =
         await DemoApi.getAPI(url: ApiUrl.getCategory);
-    
-    if (responseData.isEmpty) {
-      catLabel = false;
-      arrCategory = [];
-      } else {
-      if (responseData['category'].isNotEmpty) {
 
-        catLabel = false;
-        arrCategory=[];
-        arrCategory=responseData['category'];
+    if (responseData.isEmpty) {
+      arrCategory = [];
+    } else {
+      if (responseData['category'].isNotEmpty) {
+        arrCategory = [];
+        arrCategory = responseData['category'];
       } else {
-        catLabel = false;
-        arrCategory=[];
+        arrCategory = [];
       }
     }
     notifyListeners();
@@ -68,7 +58,6 @@ class HomeProvider extends ChangeNotifier {
 
   addCatInd(int index) {
     arrCategory[index]['isCat'] = '1';
-    
     notifyListeners();
   }
 
@@ -88,34 +77,29 @@ class HomeProvider extends ChangeNotifier {
   }
 
   filterData({required String flag}) async {
-    label=true;
+    label = true;
     notifyListeners();
 
     if (flag.toString() == 'Apply') {
       await Future.delayed(const Duration(seconds: 3), () {
-        if(arrFilterData.every((element) => element['isSelected'].toString()=='0')){
-          arrData=arrFilterData;
+        if (arrFilterData
+            .every((element) => element['isSelected'].toString() == '0')) {
+          arrData = arrFilterData;
+        } else {
+          arrData = arrFilterData
+              .where((element) => element['isSelected'].toString() == '1')
+              .toList();
         }
-        else{
-           arrData = arrFilterData
-            .where((element) => element['isSelected'].toString() == '1')
-            .toList();
-        }
-       
-        // arrData.forEach((element) { 
-        //   element['isCat']='0';
-        // });
       });
     } else {
       await Future.delayed(const Duration(seconds: 3), () {
         arrFilterData.forEach((element) {
           element['isSelected'] = '0';
-          // element['isCat'] = '0';
         });
         arrData = arrFilterData;
       });
     }
-    label=false;
+    label = false;
     notifyListeners();
   }
 }

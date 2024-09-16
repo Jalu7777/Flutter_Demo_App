@@ -31,14 +31,12 @@ class _HomeState extends State<Home> {
     homeProvider = Provider.of<HomeProvider>(context, listen: false)
       ..getCategory()
       ..getData();
-    // homeProvider.controller.addListener(homeProvider.scrollListener);
-      
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
         centerTitle: true,
         title: customText(text: 'Home', fsize: 18, fcolor: Colors.white),
@@ -304,6 +302,8 @@ class _HomeState extends State<Home> {
                     ),
                   )
                 } else ...{
+                  Center(child:customText(text: 'Brands',fontWeight: FontWeight.bold,fsize: 25)),
+                  customSizedBoxHeight(height: 15),
                   Consumer<HomeProvider>(
                     builder: (context, data, child) => SizedBox(
                       height: 250,
@@ -365,15 +365,12 @@ class _HomeState extends State<Home> {
                       Expanded(
                           child: ElevatedButton(
                         onPressed: () {
-                          // homeData.arrBrandInd = [];
                           if (homeData.arrFilterData
                               .any((element) => element['isSelected'] == '1')) {
                             homeData.filterData(flag: 'Clear');
                           }
-                          // else{
                           Navigator.pop(context);
-                          // }
-                        },
+                          },
                         style: const ButtonStyle(
                           backgroundColor:
                               MaterialStatePropertyAll(Colors.grey),
@@ -384,13 +381,7 @@ class _HomeState extends State<Home> {
                       Expanded(
                           child: ElevatedButton(
                               onPressed: () {
-                                //we can use same function for Applying and Clear filters
-                                // if (!homeData.arrFilterData.every(
-                                //     (element) => element['isSelected'] == '0')) {
-                                // } else {
                                 homeData.filterData(flag: 'Apply');
-                                // }
-                                // }
                                 Navigator.pop(context);
                               },
                               style: const ButtonStyle(

@@ -31,13 +31,16 @@ Widget customRichText(
     RichText(
         textAlign: textAlign ?? TextAlign.left,
         text: TextSpan(
-
             text: title1.toString().replaceAll('null', ''),
-            style: TextStyle(color: t1Color, fontSize: t1Size,fontWeight: t1Weight??FontWeight.normal),
+            style: TextStyle(
+                color: t1Color,
+                fontSize: t1Size,
+                fontWeight: t1Weight ?? FontWeight.normal),
             children: [
-              
               TextSpan(
-                
-                  style: TextStyle(color: t2Color, fontSize: t2Size,fontWeight: t2Weight??FontWeight.normal),
+                  style: TextStyle(
+                      color: t2Color,
+                      fontSize: t2Size,
+                      fontWeight: t2Weight ?? FontWeight.normal),
                   text: title2.toString().replaceAll('null', ''))
             ]));
